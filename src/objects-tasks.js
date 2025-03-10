@@ -18,8 +18,9 @@
  *    shallowCopy({}) => {}
  */
 
-function shallowCopy() {
-  throw new Error('Not implemented');
+function shallowCopy(obj) {
+  return { ...obj };
+  // return Object.fromEntries(Object.entries(obj));
 }
 
 /**
@@ -156,8 +157,28 @@ function makeWord(lettersObject) {
  *    sellTickets([25, 25, 50]) => true
  *    sellTickets([25, 100]) => false (The seller does not have enough money to give change.)
  */
-function sellTickets(/* queue */) {
-  throw new Error('Not implemented');
+function sellTickets(queue) {
+  let result = true;
+  for (let i = 0; i < queue.length; i += 1) {
+    if (queue[i] === 25) {
+      result = true;
+    }
+    if (queue[i] === 50) {
+      const subArr = [...queue].splice(0, i);
+      const sum = subArr.reduce((acc, val) => acc + val, 0);
+      if (sum >= 25) {
+        result = true;
+      } else result = false;
+    }
+    if (queue[i] === 100) {
+      const subArr = [...queue].splice(0, i);
+      const sum = subArr.reduce((acc, val) => acc + val, 0);
+      if (sum >= 75) {
+        result = true;
+      } else result = false;
+    }
+  }
+  return result;
 }
 
 /**
@@ -277,8 +298,15 @@ function sortCitiesArray(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+function group(array, keySelector, valueSelector) {
+  const map = new Map();
+  array.forEach((val) => {
+    if (!map.has(keySelector(val))) {
+      map.set(keySelector(val), []);
+    }
+    map.get(keySelector(val)).push(valueSelector(val));
+  });
+  return map;
 }
 
 /**
